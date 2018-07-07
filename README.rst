@@ -16,12 +16,14 @@ To Send SMS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code:: bash
+    
     java Skylinesms <application key> send <number> <message> <from_number>
 
 To Check SMS Delivery
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code:: bash
+    
     java Skylinesms <application key> status <message_id>
 
 
@@ -29,4 +31,5 @@ To Check Account Balance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code:: bash
+    
     java Skylinesms <application key> balance
