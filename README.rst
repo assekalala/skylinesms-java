@@ -7,22 +7,26 @@ Java command line for sending sms with Skylinesms
 
 To Compile
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 .. code:: bash
     javac Skylinesms.java 
 
 
 To Send SMS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 .. code:: bash
     java Skylinesms <application key> send <number> <message> <from_number>
 
 To Check SMS Delivery
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 .. code:: bash
     java Skylinesms <application key> status <message_id>
 
 
 To Check Account Balance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 .. code:: bash
     java Skylinesms <application key> balance
