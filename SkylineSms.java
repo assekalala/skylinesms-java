@@ -14,31 +14,28 @@ public class SkylineSms {
         this.api_key = api_key;
     }
 
-	public static void main (String args[]) throws Exception {
+	public static void main (String[] args) throws Exception {
       
         if (args.length > 4 && args[1].equals("send")) {
             String key = args[0]; 
             String number = args[2]; 
             String message = args[3];
+            String _from = (args.length > 6) ? args[4] : "skylinesms";
             
             SkylineSms skylinesms = new SkylineSms(key);
             
-            if (args.length > 6) {
-                log(skylinesms.send_message(number, message, args[6]));
-            } else {
-                log(skylinesms.send_message(number, message, "sklylinesms"));
-            }
+            log(skylinesms.send_message(number, message, _from));
 
-        } else if (args.length > 2 && args[2].equals("status")) {
-            String key = args[1];
-            String message_id = args[3];
+        } else if (args.length > 2 && args[1].equals("status")) {
+            String key = args[0];
+            String message_id = args[2];
 
             SkylineSms skylinesms = new SkylineSms(key);
 
             log(skylinesms.check_status(message_id));
 
-        } else if (args.length > 2 && args[2].equals("balance")) { 
-            String key = args[1];
+        } else if (args.length > 1 && args[1].equals("balance")) { 
+            String key = args[0];
 
             SkylineSms skylinesms = new SkylineSms(key);
             log(skylinesms.balance());
@@ -61,7 +58,7 @@ public class SkylineSms {
         log("       <application key> balance");
     }
 
-    public static String send_message(String phoneNumber, String msg, String _from) throws Exception  {
+    public static String send_message(String phoneNumber, String message, String _from) throws Exception  {
         /*  
         Send a message to the specified number and return a response dictionary.
 
@@ -70,8 +67,8 @@ public class SkylineSms {
         contains 'status' and 'message' on error.
         */
 
-
-        String url = sms_url + "?token=" + api_key + "&to=" + phoneNumber + "&message=" + msg;
+        String msg = URLEncoder.encode(message, "UTF-8");
+        String url = sms_url + "?token=" + api_key + "&to=" + phoneNumber + "&message=" + msg + "&from=" + _from;
         return _request(url);
     }
 
