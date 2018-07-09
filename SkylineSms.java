@@ -15,16 +15,26 @@ public class SkylineSms {
     }
 
 	public static void main (String[] args) throws Exception {
-      
+        if (args.length != 33) {
+            log("Ivalid API key");
+            System.exit(1);
+        }
+
         if (args.length > 4 && args[1].equals("send")) {
             String key = args[0]; 
             String number = args[2]; 
             String message = args[3];
             String _from = (args.length > 6) ? args[4] : "skylinesms";
             
-            SkylineSms skylinesms = new SkylineSms(key);
+            ValidationResult validation = is_valid_number(number);
+
+            if(validation.status == true) {
+                SkylineSms skylinesms = new SkylineSms(key);
             
-            log(skylinesms.send_message(number, message, _from));
+                log(skylinesms.send_message(number, message, _from));
+            } else {
+                log(validation.msg);
+            }
 
         } else if (args.length > 2 && args[1].equals("status")) {
             String key = args[0];
@@ -50,6 +60,20 @@ public class SkylineSms {
 
     public static void log(String message) {
         System.out.println(message);
+    }
+
+    public static ValidationResult is_valid_number(String number) {
+        ValidationResult result;
+
+        if (number.matches("\\d+") == false) {
+            result = new ValidationResult(false, "Phone number must be digits only");
+        } else if (number.length() < 10) {
+            result = new ValidationResult(false, "Phone number is too short");
+        } else {
+            result = new ValidationResult(true, null);
+        }
+
+        return result;
     }
 
     public static void print_usage(String args[]) {
@@ -105,5 +129,15 @@ public class SkylineSms {
         rd.close();
 
         return(result.toString());
+    }
+}
+
+final class ValidationResult {
+    boolean status;
+    String msg;
+
+    public ValidationResult(boolean status, String msg) {
+        this.status = status;
+        this.msg = msg;
     }
 }
