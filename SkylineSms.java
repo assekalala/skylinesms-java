@@ -15,22 +15,23 @@ public class SkylineSms {
     }
 
 	public static void main (String[] args) throws Exception {
-        if (args.length != 33) {
+
+        if (args[0].length() != 32) {
+
             log("Ivalid API key");
             System.exit(1);
         }
 
         if (args.length > 4 && args[1].equals("send")) {
-            String key = args[0]; 
-            String number = args[2]; 
+            String key = args[0];
+            String number = args[2];
             String message = args[3];
             String _from = (args.length > 6) ? args[4] : "skylinesms";
-            
             ValidationResult validation = is_valid_number(number);
 
             if(validation.status == true) {
                 SkylineSms skylinesms = new SkylineSms(key);
-            
+
                 log(skylinesms.send_message(number, message, _from));
             } else {
                 log(validation.msg);
@@ -44,7 +45,7 @@ public class SkylineSms {
 
             log(skylinesms.check_status(message_id));
 
-        } else if (args.length > 1 && args[1].equals("balance")) { 
+        } else if (args.length > 1 && args[1].equals("balance")) {
             String key = args[0];
 
             SkylineSms skylinesms = new SkylineSms(key);
@@ -54,7 +55,7 @@ public class SkylineSms {
             print_usage(args);
             System.exit(1);
         }
-        
+
         System.exit(0);
     }
 
@@ -83,7 +84,7 @@ public class SkylineSms {
     }
 
     public static String send_message(String phoneNumber, String message, String _from) throws Exception  {
-        /*  
+        /*
         Send a message to the specified number and return a response dictionary.
 
         The numbers must be specified in international format starting without a '+'.
